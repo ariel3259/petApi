@@ -2,16 +2,12 @@ const {Router}=require("express")
 const route =Router()
 const mysql=require("mysql2/promise")
 const fs=require("fs")
+const database=require("../db/database.json")
 //get all pets if it has an owner or not
 route.get("/pets",async (req,res)=>{
   const  onlyWithOwner=req.headers.flag==1?1:0
     try{
-        const con=await mysql.createConnection({
-            host:"localhost",
-            user:"root",
-            password:"1234",
-            database:"pets_db"
-        })
+        const con=await mysql.createConnection(database)
         const [rows]=await con.query("select bin_to_uuid(id) id,name,age,animal from pets where flag like ?",[onlyWithOwner])
       return  res.status(200).send(rows);
     }catch(err){
@@ -31,12 +27,7 @@ route.post("/pets",async (req,res)=>{
         0
     ]
     try{
-        const con=await mysql.createConnection({
-            host:"localhost",
-            user:"root",
-            password:"1234",
-            database:"pets_db"
-        })
+        const con=await mysql.createConnection(database)
         await con.query("insert into pets(id,name,age,animal,flag) values(uuid_to_bin(uuid()),?,?,?,?)",data)
        return res.status(200).send("A new pet has been added")
     }catch(err){
@@ -55,12 +46,7 @@ route.put("/pets",async (req,res)=>{
     ]
 
     try{
-        const con=await mysql.createConnection({
-            host:"localhost",
-            user:"root",
-            password:"1234",
-            database:"pets_db"
-        })
+        const con=await mysql.createConnection(database)
         const [rows]=await con.query("update pets set name=?,age=?,animal=? where id like uuid_to_bin(?)",data)
         return res.status(200).send("A pet has been modified")
     }
@@ -74,12 +60,7 @@ route.delete("/pets",async (req,res)=>{
     const id=req.headers.id;
     
     try{
-        const con=await mysql.createConnection({
-            host:"localhost",
-            user:"root",
-            password:"1234",
-            database:"pets_db"
-        })
+        const con=await mysql.createConnection(database)
         const [rows]=await con.query("update pets set flag=1 where id like uuid_to_bin(?)",[id])
         return res.status(200).send("Some one has been adopted a pet")
     }
