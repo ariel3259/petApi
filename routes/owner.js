@@ -28,7 +28,7 @@ route.get("/owner",async (req,res)=>{
     }
 });
 
-route.post("/adoptPet",async (req,res)=>{
+route.post("/adopted/pet",async (req,res)=>{
     const data=[
         req.headers.owner_id,
         req.headers.id
@@ -45,7 +45,7 @@ route.post("/adoptPet",async (req,res)=>{
     }
 });
 
-route.get("/petsOfOwner",async (req,res)=>{
+route.get("/owner/pets",async (req,res)=>{
     const id=req.headers.id;
     try{
         const con =await  mysql.createConnection(database);

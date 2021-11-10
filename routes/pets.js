@@ -69,7 +69,7 @@ route.delete("/pets",async (req,res)=>{
 });
 
 //pets descriptions
-route.get("/petDescription",(req,res)=>{
+route.get("/pet/description",(req,res)=>{
     try{
         return res.send( fs.readFileSync("./pets.txt"));
     }catch(err){
