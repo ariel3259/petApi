@@ -12,7 +12,7 @@ route.post("/owner",async (req,res)=>{
         return res.send(rows);
     }
     catch(err){
-        return res.status(405).send("An error has been happened");
+        return res.status(500).send("An error has been happened");
     }  
 });
 
@@ -24,7 +24,7 @@ route.get("/owner",async (req,res)=>{
         return res.send(rows);
     }
     catch(err){
-        return res.status(405).send("An error has been happened");
+        return res.status(500).send("An error has been happened");
     }
 });
 
@@ -41,7 +41,7 @@ route.post("/adopted/pet",async (req,res)=>{
     }
     catch(err){
         console.log(err);
-        return res.status(405).send("Some mistake has been happened");
+        return res.status(500).send("Some mistake has been happened");
     }
 });
 
@@ -54,7 +54,7 @@ route.get("/owner/pets",async (req,res)=>{
     }
     catch(err){
         console.log(err);
-        return res.status(405).send("Some mistake has been happened");
+        return res.status(500).send("Some mistake has been happened");
     }
 });
 

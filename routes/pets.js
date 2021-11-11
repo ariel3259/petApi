@@ -13,13 +13,13 @@ route.get("/pets",async (req,res)=>{
         return  res.status(200).send(rows);
     }catch(err){
         console.log(err);
-        return res.status(405).send("An error has been happened");
+        return res.status(500).send("An error has been happened");
     }
 });
 
 //Add a new pet 
 route.post("/pets",async (req,res)=>{
-    if( !req.body.name || !req.body.age || !req.body.animal)throw res.status(405).send("First, insert the data");
+    if( !req.body.name || !req.body.age || !req.body.animal)throw res.status(500).send("First, insert the data");
     const data=[
         req.body.name,
         req.body.age,
@@ -30,13 +30,13 @@ route.post("/pets",async (req,res)=>{
         await con.query(sqlSentences.insertPet,data);
         return res.status(200).send("A new pet has been added");
     }catch(err){
-        return res.status(405).send("An error has been happened");
+        return res.status(500).send("An error has been happened");
     }
 });
 
 //Modify a pet
 route.put("/pets",async (req,res)=>{
-    if(!req.body.name || !req.body.age || !req.body.animal)throw res.status(405).send("First, insert the data");
+    if(!req.body.name || !req.body.age || !req.body.animal)throw res.status(500).send("First, insert the data");
     const data = [
         req.body.name,
         req.body.age,
@@ -50,7 +50,7 @@ route.put("/pets",async (req,res)=>{
         return res.status(200).send("A pet has been modified");
     }
     catch(err){
-        return res.status(405).send("An error has been happened");
+        return res.status(500).send("An error has been happened");
     }
 });
 
@@ -64,7 +64,7 @@ route.delete("/pets",async (req,res)=>{
         return res.status(200).send("Some one has been adopted a pet");
     }
     catch(err){
-        return res.status(405).send("An error has been happened");
+        return res.status(500).send("An error has been happened");
     }
 });
 
@@ -74,7 +74,7 @@ route.get("/pet/description",async (req,res)=>{
         const data=await fs.readFile("./pets.txt","utf-8");
         return res.send(data);
     }catch(err){
-        return res.status(405).send("there are no description");
+        return res.status(500).send("there are no description");
     }
 });
 
