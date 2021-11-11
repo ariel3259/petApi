@@ -1,14 +1,14 @@
-const {Router}=require("express");
-const route=Router();
-const mysql=require("mysql2/promise");
-const sqlSentences=require("../db/sqlSentences");
-const database=require("../db/database.json");
+const {Router} = require("express");
+const route = Router();
+const mysql = require("mysql2/promise");
+const sqlSentences = require("../db/sqlSentences");
+const database = require("../db/database.json");
 
-route.post("/owner",async (req,res)=>{
-    const name=req.body.name; 
+route.post("/owner", async (req, res) => {
+    const name = req.body.name; 
     try{
-        const con =await  mysql.createConnection(database);
-        const [rows] = await con.query(sqlSentences.insertOwner,[name]);
+        const con = await  mysql.createConnection(database);
+        const [ rows ] = await con.query(sqlSentences.insertOwner,[ name ]);
         return res.send(rows);
     }
     catch(err){
@@ -17,10 +17,10 @@ route.post("/owner",async (req,res)=>{
 });
 
 //get owners without pets
-route.get("/owner",async (req,res)=>{
+route.get("/owner", async (req, res) => {
     try{
-        const con =await  mysql.createConnection(database);
-        const [rows] = await con.query(sqlSentences.selectOwners);
+        const con = await  mysql.createConnection(database);
+        const [ rows ] = await con.query(sqlSentences.selectOwners);
         return res.send(rows);
     }
     catch(err){
@@ -28,14 +28,14 @@ route.get("/owner",async (req,res)=>{
     }
 });
 
-route.post("/adopted/pet",async (req,res)=>{
+route.post("/adopted/pet", async (req, res) => {
     const data=[
         req.headers.owner_id,
         req.headers.id
     ];
 
     try{
-        const con =await  mysql.createConnection(database);
+        const con = await  mysql.createConnection(database);
         await con.query(sqlSentences.adoptPet,data);
         return res.send("Some one has been adopted a pet");
     }
@@ -45,11 +45,11 @@ route.post("/adopted/pet",async (req,res)=>{
     }
 });
 
-route.get("/owner/pets",async (req,res)=>{
+route.get("/owner/pets", async (req, res) => {
     const id=req.headers.id;
     try{
-        const con =await  mysql.createConnection(database);
-        const [rows]=await con.query(sqlSentences.selectByOwner,[id]);
+        const con = await  mysql.createConnection(database);
+        const [ rows ] = await con.query(sqlSentences.selectByOwner,[id]);
         return res.send(rows);
     }
     catch(err){
