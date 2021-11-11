@@ -69,9 +69,10 @@ route.delete("/pets",async (req,res)=>{
 });
 
 //pets descriptions
-route.get("/pet/description",(req,res)=>{
+route.get("/pet/description",async (req,res)=>{
     try{
-        return res.send( fs.readFileSync("./pets.txt"));
+        const data=await fs.readFile("./pets.txt","utf-8");
+        return res.send(data);
     }catch(err){
         return res.status(405).send("there are no description");
     }
