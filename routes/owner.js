@@ -4,6 +4,7 @@ const mysql = require("mysql2/promise");
 const sqlSentences = require("../db/sqlSentences");
 const database = require("../db/database.json");
 
+//storages an owner
 route.post("/owner", async (req, res) => {
     const name = req.body.name; 
     try{
@@ -28,7 +29,7 @@ route.get("/owner", async (req, res) => {
     }
 });
 
-route.post("/adopted/pet", async (req, res) => {
+route.post("/owner/adopt/pet", async (req, res) => {
     const data=[
         req.headers.owner_id,
         req.headers.id
@@ -37,11 +38,11 @@ route.post("/adopted/pet", async (req, res) => {
     try{
         const con = await  mysql.createConnection(database);
         await con.query(sqlSentences.adoptPet,data);
-        return res.send("Some one has been adopted a pet");
+        return res.send("Some pet has been adopted by someone");
     }
     catch(err){
         console.log(err);
-        return res.status(500).send("Some mistake has been happened");
+        return res.status(500).send("A mistake happened");
     }
 });
 
@@ -54,7 +55,7 @@ route.get("/owner/pets", async (req, res) => {
     }
     catch(err){
         console.log(err);
-        return res.status(500).send("Some mistake has been happened");
+        return res.status(500).send("a mistake happened");
     }
 });
 

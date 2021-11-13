@@ -18,9 +18,11 @@
   },
   "homepage": "https://github.com/ariel3259/petApi#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mysql2": "^2.3.2"
+    "mysql2": "^2.3.2",
+    "nodemailer": "^6.7.0"
   },
   "devDependencies": {
     "eslint": "^8.1.0"

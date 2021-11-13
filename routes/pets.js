@@ -4,6 +4,7 @@ const fs = require("fs");
 const database = require("../db/database.json");
 const sqlSentences = require("../db/sqlSentences");
 const mysql = require("mysql2/promise");
+
 //get all pets if it has an owner or not
 route.get("/pets", async (req, res) => {
     const  withOwner = req.headers.flag==1 ? sqlSentences.selectWithOwners : sqlSentences.selectWithoutOwners;
@@ -35,7 +36,7 @@ route.post("/pets", async (req, res) => {
 });
 
 //Modify a pet
-route.put("/pets", async (req ,res) => {
+route.put("/pets", async (req, res) => {
     if(!req.body.name || !req.body.age || !req.body.animal) throw res.status(500).send("First, insert the data");
     const data = [
         req.body.name,
@@ -71,7 +72,7 @@ route.delete("/pets", async (req, res) => {
 //pets descriptions
 route.get("/pet/description", async (req, res) => {
     try{
-        const data = await fs.readFile("./pets.txt","utf-8");
+        const data = await fs.readFile("./txt/pets.txt","utf-8");
         return res.send(data);
     }catch(err){
         return res.status(500).send("there are no description");
